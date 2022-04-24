@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pxc0wmcoo$f!=jzx#z^ke^h97*+wjn$^)22m$cnt*rzy32^-#7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'shopzy-by-ankit.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '']
 
 
 # Application definition
@@ -104,7 +104,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
