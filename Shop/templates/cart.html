@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% load cart_qty %}
+{% load custom_filter %}
+{% block content %}
+
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        padding-top: auto;
+        text-align: center;
+        height: auto;
+        width: auto;
+    }
+
+    #total {
+        text-align: right;
+    }
+
+    #nothing {
+        font-size: 25px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular';
+    }
+</style>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if products %}
+            {% for product in products %}
+            <tr>
+
+                <td width="auto"><img class="rounded-circle" src="{{product.image.url}}" alt="img" height="100px"></td>
+                <td scope="row">{{product.name}}</td>
+                <td>{{product.price|currency}}</td>
+                <td>
+                    <div class="row  cart">
+                        <form action="#" id="btn" method="post" class="col-5 ">
+                            {% csrf_token %}
+                            <input hidden type="text" name="productId" value="{{product.id}}">
+                            <input hidden type="text" name="qty" value="-1">
+                            <input type="submit" value="-" class=" btn btn-block
+                          btn-light border">
+                        </form>
+
+                        <div class="text-center col"> {{product|cart_quantity:request.session.cart}} </div>
+                        <form action="#" id="btn" method="post" class="col-5 ">
+                            {% csrf_token %}
+                            <input hidden type="text" name="productId" value="{{product.id}}">
+                            <input hidden type="text" name="qty" value="1">
+                            <input type="submit" value="+" class="btn btn-block
+                          btn-light border">
+                        </form>
+                    </div>
+                </td>
+
+                <td>{{product|total_price:request.session.cart|currency}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" id="total">Total</td>
+                <td>{{products|grand_total:request.session.cart|currency}}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" id="nothing">There are no products in cart.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+
+
+
+    <button type="button" class="btn btn-outline"></button>
+</div>
+
+
+
+
+
+{% endblock %}
