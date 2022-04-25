@@ -8,6 +8,19 @@
     width: 250px;
   }
 
+  .filter {
+    padding: 10px;
+    margin-bottom: + 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+  }
+
+  .f {
+    position: relative;
+    float: right;
+  }
+
   .cart {
     border: 1px solid rgba(119, 115, 115, 0.658);
     border-radius: 5px;
@@ -36,35 +49,33 @@
   }
 </style>
 <div class="container-fluid mt-3">
+
+  <div class=" filter">
+    <button type="button" class="btn f btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+      {% if id%}
+      Filter :- {{id}}
+      {% else %}
+      Filter
+      {% endif %}
+
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="/">All</a></li>
+      {% for cat in category %}
+      <li><a class="dropdown-item" href="/?category={{cat.id}}">{{cat.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
   <div class="row">
 
     <!-- filter -->
 
-    <div class="col-lg-2 mx-auto">
-      <div class="list-group">
-        <div class="btn-group">
-          <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-            {% if id%}
-            Filter :- {{id}}
-            {% else %}
-            Filter
-            {% endif %}
-
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/">All</a></li>
-            {% for cat in category %}
-            <li><a class="dropdown-item" href="/?category={{cat.id}}">{{cat.name}}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
 
 
     <!-- Products -->
-    <div id='products' class="col-lg-10 mx-auto">
+    <div id='products' class=" mx-auto">
       <div class="row mx-auto">
         {% for product in products %}
         <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">

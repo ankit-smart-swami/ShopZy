@@ -13,7 +13,7 @@ class Cart(View):
     def post(self, request):
         productId = request.POST.get('productId')
         value = request.POST.get('qty')
-        print(value)
+        # print(value)
         cart = request.session.get('cart')
 
         qty = cart.get(productId)
@@ -25,7 +25,7 @@ class Cart(View):
             cart[productId] = 1
         
         request.session['cart'] = cart
-        print(request.session['cart'])        
+        #print(request.session['cart'])        
         
         
         
