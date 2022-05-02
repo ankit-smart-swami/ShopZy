@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load cart_qty %}
+{% load custom_filter %}
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        padding-top: auto;
+        text-align: center;
+        height: auto;
+        width: auto;
+    }
+
+    #total {
+        text-align: right;
+    }
+
+    .btn-outline-info {
+        border-color: sienna;
+        color: saddlebrown;
+    }
+
+    #check {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    #nothing {
+        font-size: 25px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular';
+    }
+</style>
+
+<h1 style="text-align: center;" class="m-2">Orders</h1>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SNo</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if orders %}
+            {% for order in orders %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td width="auto"><img class="rounded-circle" src="{{order.product.image.url}}" alt="img" height="100px">
+                </td>
+                <td scope="row">{{order.product.name}}</td>
+                <td>{{order.price|currency}}</td>
+                <td>{{order.date}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.quantity|total_val:order.price|currency}}</td>
+                <td>{{order.status.status}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" id="nothing">You have no Orders.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

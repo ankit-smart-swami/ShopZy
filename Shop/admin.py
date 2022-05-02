@@ -18,4 +18,4 @@ class AdminOrder(admin.ModelAdmin):
 admin.site.register(Product,AdminProduct)
 admin.site.register(Category,AdminCategory)
 admin.site.register(Customer,AdminCustomer)
-admin.site.register(Orders,AdminOrder)
+admin.site.register(Order,AdminOrder)
