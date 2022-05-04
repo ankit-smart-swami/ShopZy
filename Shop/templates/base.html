@@ -19,7 +19,12 @@
     position: sticky;
   }
 
+  #middle {
+    min-height: 75vh;
+  }
+
   .foot {
+
     color: black;
   }
 
@@ -90,10 +95,11 @@
       </div>
     </div>
   </nav>
-  {% block content%}
+  <div id="middle">
+    {% block content%}
 
-  {% endblock %}
-
+    {% endblock %}
+  </div>
   <!-- Footer -->
   <div class="foot container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">

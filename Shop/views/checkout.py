@@ -28,4 +28,4 @@ class CheckOut(View):
         request.session["cart"] = {}   
         
         
-        return redirect("Cart")
+        return redirect("Orders")

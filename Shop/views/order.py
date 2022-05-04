@@ -11,3 +11,6 @@ class Orders(View):
         orders = {'orders' : order}
         
         return render(request, 'orders.html',orders)
+    
+    
+    

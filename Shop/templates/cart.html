@@ -73,6 +73,8 @@
                 <td colspan="4" id="total">Total</td>
                 <td>{{products|grand_total:request.session.cart|currency}}</td>
             </tr>
+
+
             {% else %}
             <tr>
                 <td colspan="5" id="nothing">There are no products in cart.</td>
@@ -81,10 +83,51 @@
         </tbody>
     </table>
 
+    <hr>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Check Out
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Check Out Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-2 m-2">
+                        <form action="/checkout" method="post">
+                            {% csrf_token %}
+
+                            <div class="form-group m-2">
+                                <label for="">Address</label>
+                                <input type="text" name="Address" id="" class="form-control"
+                                    placeholder="Danish Kunj, Bhopal" aria-describedby="helpId">
+                            </div>
+
+                            <div class="form-group m-2">
+                                <label for="">Phone</label>
+                                <input type="text" name="Phone" id="" class="form-control" placeholder="9876543210"
+                                    aria-describedby="helpId">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Check Out</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-    <button type="button" class="btn btn-outline"></button>
+
 </div>
 
 

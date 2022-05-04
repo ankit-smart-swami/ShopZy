@@ -1,4 +1,6 @@
 from django.urls import path
+
+from Shop.views.checkout import CheckOut
 from .views import *
 
 urlpatterns = [
@@ -7,5 +9,6 @@ urlpatterns = [
     path('login/', Login.as_view() , name = 'Login'),
     path('logout/', logout , name = 'Logout'),
     path('cart/', Cart.as_view(), name = 'Cart'),
-    path('orders', Orders.as_view(), name = 'Orders')
+    path('checkout', CheckOut.as_view(), name = 'CheckOut'),
+    path('orders/', Orders.as_view(), name = 'Orders')
 ]
