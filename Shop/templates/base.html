@@ -30,9 +30,9 @@
 
   .fa {
     padding: 10px;
-    font-size: 35px;
-    width: 50px;
-    height: 50px;
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
@@ -72,7 +72,9 @@
         <ul class="navbar-nav my-2 my-lg-0">
           {% if request.session.cart %}
           <li class="nav-item">
-            <a class="nav-link" href="/cart">Cart</a>
+            <a class="nav-link" href="/cart">Cart
+              <span class="badge btn-info">{{request.session.cart.keys|length}}</span>
+            </a>
           </li>
           {% endif %}
 

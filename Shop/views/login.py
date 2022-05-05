@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views import View
 from django.contrib.auth.hashers import check_password
 from Shop.models.customer import Customer
 
 
 class Login(View):
+    returnUrl = None
     def get(self, request):
+        Login.returnUrl = request.GET.get('returnUrl')
         return render(request, 'login.html')
     
     def post(self, request):
@@ -19,7 +21,12 @@ class Login(View):
             if check_password(password, customer.password):
                 request.session['customerId'] = customer.id
                 request.session['customerEmail'] = customer.email
-                return redirect('HomePage')
+                
+                if Login.returnUrl:
+                    return HttpResponseRedirect(Login.returnUrl)
+                else :
+                    Login.returnUrl = None
+                    return redirect('HomePage')
             
             err_msg = 'Invalid Cridential'
             

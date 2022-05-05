@@ -20,6 +20,11 @@
         text-align: right;
     }
 
+    #checkout-btn {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
     #nothing {
         font-size: 25px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular';
@@ -86,10 +91,11 @@
     <hr>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Check Out
-    </button>
-
+    <div id="checkout-btn">
+        <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Check Out
+        </button>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
