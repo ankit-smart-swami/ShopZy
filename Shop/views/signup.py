@@ -59,4 +59,4 @@ class SignUp(View):
     
         customer.password = make_password(password)
         customer.register()
-        return redirect('HomePage')
+        return redirect('Login')

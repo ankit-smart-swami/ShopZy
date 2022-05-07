@@ -2,30 +2,32 @@
 
 {% block content %}
 <style>
+    .container {
+        background-color: rgb(206, 218, 215);
+    }
 
-.container{
-    background-color: rgb(206, 218, 215);
-}
-.alert{
-    text-align: center;
-    padding: 0.5rem 3rem;
-}
-.rounded{
-    background-color: rgb(248,241,223,0.9);
-    /* 248 241 223 */
-}
+    .alert {
+        text-align: center;
+        padding: 0.5rem 3rem;
+    }
 
-.form-control{
-    background: transparent;
-}
-.btn1{
-    display: flex;
-    align-items: center;
-}
-.btn{
-    border-radius: 1.2rem;
-}
+    .rounded {
+        background-color: rgb(248, 241, 223, 0.9);
+        /* 248 241 223 */
+    }
 
+    .form-control {
+        background: transparent;
+    }
+
+    .btn1 {
+        display: flex;
+        align-items: center;
+    }
+
+    .btn {
+        border-radius: 1.2rem;
+    }
 </style>
 
 <div class="container">
@@ -34,33 +36,35 @@
             <h4 class="alert border rounded success"> Login</h4>
             {% if err_msg %}
             <div class="alert alert-danger" role="alert">
-              {{err_msg}}
+                {{err_msg}}
             </div>
             {% endif %}
             <form action="/login/" method="POST">
 
                 {% csrf_token %}
-                
+
                 <!-- e-mail -->
-            <div class="form-group">
+                <div class="form-group">
                     <label for=""> e-mail </label>
-                <input type="email" required name="email" id="" value="{{email}}"class="form-control mt-2 mb-2"
-                    placeholder="example@mail.com">
-            </div>
+                    <input type="email" required name="email" id="" value="{{email}}" class="form-control mt-2 mb-2"
+                        placeholder="example@mail.com">
+                </div>
                 <!-- Password -->
-            <div class="form-group">
+                <div class="form-group">
                     <label for=""> Password</label>
-                <input type="password" name="password" id=""
-                    class="form-control mt-2 mb-2" placeholder="********">
-            </div>
+                    <input type="password" name="password" id="" class="form-control mt-2 mb-2" placeholder="********">
+                </div>
                 <!-- Submit -->
-            <div class="form-group btn1 mt-4 ">
+                <div class="form-group btn1 mt-4 ">
                     <input class="btn btn-sm btn-info col-lg-5 mx-auto" type="submit" value="Login">
-            </div>
-        </form>
+                </div>
+            </form>
+            <div class="mt-2 border rounded pt-3 text-center">
+                <p>New User <a href="/signup">Sign Up</a> Instead.</p>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
