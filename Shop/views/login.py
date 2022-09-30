@@ -18,17 +18,21 @@ class Login(View):
         err_msg = ''
         
         if customer :
-            if check_password(password, customer.password):
-                request.session['customerId'] = customer.id
-                request.session['customerEmail'] = customer.email
-                
-                if Login.returnUrl:
-                    return HttpResponseRedirect(Login.returnUrl)
-                else :
-                    Login.returnUrl = None
-                    return redirect('HomePage')
             
-            err_msg = 'Invalid Cridential'
+            if customer.verified :
+                if check_password(password, customer.password):
+                    request.session['customerId'] = customer.id
+                    request.session['customerEmail'] = customer.email
+                    
+                    if Login.returnUrl:
+                        return HttpResponseRedirect(Login.returnUrl)
+                    else :
+                        Login.returnUrl = None
+                        return redirect('HomePage')
+                
+                err_msg = 'Invalid Cridential'
+            else :
+                err_msg = "Verify Your Accont."
             
         else :   
             err_msg = 'User not Found'

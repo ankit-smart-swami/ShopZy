@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load cart_qty %}
+{% load custom_filter %}
+{% block content %}
+
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        padding-top: auto;
+        text-align: center;
+        height: auto;
+        width: auto;
+    }
+
+    #total {
+        text-align: right;
+    }
+
+    #checkout-btn {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    #nothing {
+        font-size: 25px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular';
+    }
+</style>
+
+<div class="container">
+    <h1>Payment Page</h1>
+    <hr>
+    <ul>
+        <li>
+            <h5>Redirecting to marchent...</h5>
+        </li>
+        <li>
+            <h5>Don't refresh the page</h5>
+        </li>
+
+        <button type="button" id="rzp" class="btn btn-primary">Pay Now</button>
+
+    </ul>
+
+
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{razorpay_merchant_id}}",
+        "amount": "{{amount}}",
+        "currency": "INR",
+        "name": "WonderShop",
+        "description": "Test Transaction",
+        "order_id": "{{order_id}}",
+        "callback_url": "{{callback_url}}",
+        "prefill": {
+            "name": "{{request.user.name}}",
+            "email": "{{request.user.email}}",
+            "contact": "+91" + "{{request.user.phone}}"
+        },
+        "theme": {
+            "color": "#2BA977"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp').onclick = function (e) {
+        console.log("Hello");
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+
+
+{% endblock %}

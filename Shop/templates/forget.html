@@ -33,12 +33,7 @@
 <div class="container">
     <div class="p-4 m-4">
         <div class="col-lg-5 mt-4 mb-4 mx-auto border rounded p-4 ">
-            <h4 class="alert border rounded success"> Login</h4>
-            {% if err_msg %}
-            <div class="alert alert-danger" role="alert">
-                {{err_msg}}
-            </div>
-            {% endif %}
+            <h4 class="alert border rounded success"> Forget Password</h4>
             <form action="/login/" method="POST">
 
                 {% csrf_token %}
@@ -49,14 +44,9 @@
                     <input type="email" required name="email" id="" value="{{email}}" class="form-control mt-2 mb-2"
                         placeholder="example@mail.com">
                 </div>
-                <!-- Password -->
-                <div class="form-group">
-                    <label for=""> Password</label>
-                    <input type="password" name="password" id="" class="form-control mt-2 mb-2" placeholder="********">
-                </div>
                 <!-- Submit -->
                 <div class="form-group btn1 mt-4 ">
-                    <input class="btn btn-sm btn-info col-lg-5 mx-auto" type="submit" value="Login">
+                    <button class="btn btn-sm btn-info col-lg-5 mx-auto" type="submit" value="Login"></button>>
                 </div>
             </form>
             <div class="mt-2 border rounded pt-3 text-center" style="display: flex; justify-content: space-around;">
@@ -64,7 +54,7 @@
                     <p>New ? <a href="/signup">Sign Up</a>.</p>
                 </div>
                 <div>
-                    <p><a href="/login">Forget Password 🤔?</a>.</p>
+                    <p><a href="/login?status=forget">Forget Password 🤔?</a>.</p>
                 </div>
             </div>
         </div>

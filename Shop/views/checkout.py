@@ -6,17 +6,22 @@ from django.views import View
 class CheckOut(View):
     def get(self,request):
         return redirect("Cart")
+    
     def post(self, request):
+        amount = 0
         address = request.POST.get("Address")
         phone = request.POST.get("Phone")
         print(address,phone)
         customer = request.session.get("customerId")
         cart = request.session.get("cart")
         print(address, phone)
-        
+    
+
+    
         products = Product.get_products_by_id(list(cart.keys()))
         
         for product in products:
+            amount += product.price * cart.get(str(product.id))
             order = Order(
                 customer = Customer(id = customer),
                 product = product,
@@ -26,9 +31,8 @@ class CheckOut(View):
                 mobile = phone)
             
             order.placeOrder()
-            
-            
-        request.session["cart"] = {}   
+             
+        #request.session["cart"] = {}   
         
         
-        return redirect("Orders")
+        return render(request,"payment.html",{'amount' : amount})

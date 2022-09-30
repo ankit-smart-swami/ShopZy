@@ -7,8 +7,13 @@ class Customer(models.Model) :
     phone = models.CharField(max_length=12)
     email = models.EmailField()
     password = models.CharField(max_length=20)
+    verified = models.BooleanField(default=False)
     
     def register(self):
+        self.save()
+    
+    def setVerified(self):
+        self.verified = True
         self.save()
         
     def isExists(self) :

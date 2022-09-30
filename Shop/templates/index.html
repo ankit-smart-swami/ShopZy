@@ -4,6 +4,42 @@
 {% block content %}
 
 <style>
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #Search {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 120%;
+    height: auto;
+  }
+
+  #search-box {
+    padding: 3%;
+    margin: 5px;
+    min-width: 140%;
+    min-height: 200%;
+    text-align: center;
+    border-radius: 25px;
+  }
+
+  .s-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #search-btn {
+    border-radius: 5px;
+    background-color: #cdcc38;
+    color: #271eaf;
+    height: fit-content;
+    border: 1px solid #271eaf;
+  }
+
   .img {
     width: 250px;
   }
@@ -35,6 +71,10 @@
     background-color: rgba(211, 255, 248, 0.693);
   }
 
+  .prdts {
+    margin: 3%;
+  }
+
   #btn {
     padding: 0.2rem;
   }
@@ -57,87 +97,108 @@
   }
 </style>
 <div class="container-fluid mt-3">
-  <!-- filter -->
-  <div class=" filter">
-    <button type="button" class="btn f btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+  <div class="flex">
+    <div class="text-center">
+      <form action="" method="GET" value="" id="Search">
+        <input type="text" name="Search" value="" placeholder="Search Products" id="search-box" />
+        <div class="s-btn">
+          <input type="submit" name="submit" value="Search" id="search-btn" />
+        </div>
+      </form>
+    </div>
+    <!-- filter -->
+    <div class=" filter">
+      <button type="button" class="btn f btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-      {% if id%}
-      Filter :- {{id}}
-      {% else %}
-      Filter
-      {% endif %}
+        {% if id%}
+        Filter :- {{id}}
+        {% else %}
+        Filter
+        {% endif %}
 
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="/">All</a></li>
-      {% for cat in category %}
-      <li><a class="dropdown-item" href="/?category={{cat.id}}">{{cat.name}}</a></li>
-      {% endfor %}
-    </ul>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/">All</a></li>
+        {% for cat in category %}
+        <li><a class="dropdown-item" href="/?category={{cat.id}}">{{cat.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+
   </div>
+
+
   <div class="row">
-
-
-
-
-
 
     <!-- Products -->
     <div id='products' class=" mx-auto">
       <div class="row mx-auto">
+        {% if size == 0 %}
+        <div class="no-product">
+          <p class="err-msg">There are no products to show.</p>
+        </div>
+        {% else %}
         {% for product in products %}
-        <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
-          <div class="img-div">
-            <img src={{product.image.url}} class="card-img-top img" alt="{{product.name}}-image">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{product.name}}</h5>
-            <p class="card-text">{{product.price|currency}}</p>
+        {% if 3 >= size %}
+        <div class="card flex prdts" id={{product.id}} style=" width: 18rem;">
+          {% else %}
+          <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
+            {% endif %}
+            <div class="img-div">
+              <img src={{product.image.url}} class="card-img-top img" alt="{{product.name}}-image">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">{{product.price|currency}}</p>
 
-            <!-- Footer -->
-            <div class="card-footer p-0 no-gutters">
-              <!-- if in cart -->
-              {% if product|is_in_cart:request.session.cart %}
-              <div class="row no-gutters cart">
-                <form action="/#{{product.id}}" id="btn" method="post" class="col-2 no-gutters">
+              <!-- Footer -->
+              <div class="card-footer p-0 no-gutters">
+                <!-- if in cart -->
+                {% if product|is_in_cart:request.session.cart %}
+                <div class="row no-gutters cart">
+                  <form action="/#{{product.id}}" id="btn" method="post" class="col-2 no-gutters">
+                    {% csrf_token %}
+                    <input hidden type="text" name="productId" value="{{product.id}}">
+                    <input hidden type="text" name="qty" value="-1">
+                    <input type="submit" value="-" class="no-gutters btn btn-block
+                  btn-light border">
+                  </form>
+
+                  <div class="text-center col"> {{product|cart_quantity:request.session.cart}} </div>
+                  <form action="/#{{product.id}}" id="btn" method="post" class="col-2 no-gutters">
+                    {% csrf_token %}
+                    <input hidden type="text" name="productId" value="{{product.id}}">
+                    <input hidden type="text" name="qty" value="1">
+                    <input type="submit" value="+" class="no-gutters btn btn-block
+                  btn-light border">
+                  </form>
+                </div>
+
+                <!-- if not in cart -->
+                {% else %}
+                <form action="/#{{product.id}}" method="post" class="btn-block">
                   {% csrf_token %}
                   <input hidden type="text" name="productId" value="{{product.id}}">
-                  <input hidden type="text" name="qty" value="-1">
-                  <input type="submit" value="-" class="no-gutters btn btn-block
-                  btn-light border">
+                  <button type="submit" class="btn btn-primary">Add To Cart</button>
                 </form>
 
-                <div class="text-center col"> {{product|cart_quantity:request.session.cart}} </div>
-                <form action="/#{{product.id}}" id="btn" method="post" class="col-2 no-gutters">
-                  {% csrf_token %}
-                  <input hidden type="text" name="productId" value="{{product.id}}">
-                  <input hidden type="text" name="qty" value="1">
-                  <input type="submit" value="+" class="no-gutters btn btn-block
-                  btn-light border">
-                </form>
+                {% endif %}
               </div>
-
-              <!-- if not in cart -->
-              {% else %}
-              <form action="/#{{product.id}}" method="post" class="btn-block">
-                {% csrf_token %}
-                <input hidden type="text" name="productId" value="{{product.id}}">
-                <button type="submit" class="btn btn-primary">Add To Cart</button>
-              </form>
-
-              {% endif %}
             </div>
           </div>
+
+          {% endfor %}
+          {% endif %}
+
+
+
         </div>
-        {% endfor %}
-
-
       </div>
     </div>
   </div>
-</div>
 
 
 
 
-{% endblock %}
+  {% endblock %}

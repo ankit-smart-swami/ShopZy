@@ -12,7 +12,7 @@ class Order(models.Model):
     address = models.CharField(max_length=50, blank=True)
     mobile = models.CharField(max_length=10, blank=True)
     date = models.DateField(default=datetime.datetime.today)
-    status = models.ForeignKey(Status, default=Status(1), on_delete=models.CASCADE)
+    status = models.ForeignKey(Status,default=Status(1), on_delete=models.CASCADE)
     
     
     def placeOrder(self):

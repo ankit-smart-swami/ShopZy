@@ -19,6 +19,10 @@ class Product(models.Model) :
         return Product.objects.filter(id__in = product_ids)
     
     @staticmethod
+    def get_product_by_txt(txt):
+        return Product.objects.filter(name__icontains = txt)
+    
+    @staticmethod
     def get_products_by_categoryId(category_id):
         if category_id :
             return Product.objects.filter(category = category_id)

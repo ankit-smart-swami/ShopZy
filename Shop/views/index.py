@@ -12,6 +12,12 @@ class Index(View):
         categories = Category.get_all_category()
         categoryId = request.GET.get('category')
         data['id'] = None
+        searchTxt = request.GET.get('Search')
+        #print(searchTxt)
+        if searchTxt :
+            products = Product.get_product_by_txt(searchTxt)
+            print(len(products))
+        
         
         if categoryId :
             products = Product.get_products_by_categoryId(categoryId)
@@ -19,7 +25,7 @@ class Index(View):
             
         data['category'] = categories
         data['products'] = products
-        
+        data['size'] = len(products)
         print("You are : " , request.session.get('customerEmail'))
         return render(request,'index.html',data)
     

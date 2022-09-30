@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.hashers import make_password
 from Shop.models.customer import Customer
+import secrets
+
+from Shop.models.user_status import User
 
 class SignUp(View):
     @staticmethod
@@ -59,4 +62,12 @@ class SignUp(View):
     
         customer.password = make_password(password)
         customer.register()
+        # Creating an user object
+        email = customer.email
+        key = secrets.token_hex(15)
+        user = User(email=email, key=key)
+        user.save()
+        user.sendMail()
+        
+        
         return redirect('Login')
