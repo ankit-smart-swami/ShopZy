@@ -22,7 +22,7 @@ class User(models.Model) :
         message = f'''
         Cofirm your account at ShopZy.
         Click on below link to confirm your account.
-        http://127.0.0.1:8000/auth?key={self.key}&uname={self.email}
+        http://shopzy-by-ankit.herokuapp.com/auth?key={self.key}&uname={self.email}
         '''  
         message = (f'''Subject: Confirm Account\n\n{message}''')
         
